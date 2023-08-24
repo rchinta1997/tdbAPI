@@ -1,0 +1,134 @@
+{
+    "status": "success",
+    "message": "",
+    "result": {
+        "stations": [
+            {
+              "code": "SC",
+              "name": "Secunderabad jn",
+              "isCateringAvailable": false,
+              "dayCount": "1",
+              "arrival": "--",
+              "departure": "16:57",
+              "halt": "--",
+              "stationSerialNumber": null,
+              "routeNumber": null,
+              "arrDate": "2022-08-08",
+              "depDate": "2022-08-08",
+              "delayArrival": "-1",
+              "schArrivalTime": "--",
+              "schArrivalDate": "2022-08-08"
+            },
+            {
+              "code": "BZA",
+              "name": "Vijayawada jn",
+              "isCateringAvailable": false,
+              "dayCount": "1",
+              "arrival": "23:36",
+              "departure": "00:09",
+              "halt": "20:00",
+              "stationSerialNumber": null,
+              "routeNumber": null,
+              "arrDate": "2022-08-07",
+              "depDate": "2022-08-08",
+              "delayArrival": "76",
+              "schArrivalTime": "22:20",
+              "schArrivalDate": "2022-08-08"
+            },
+            {
+              "code": "RJY",
+              "name": "Rajahmundry",
+              "isCateringAvailable": false,
+              "dayCount": "2",
+              "arrival": "03:26",
+              "departure": "03:30",
+              "halt": "02:00",
+              "stationSerialNumber": null,
+              "routeNumber": null,
+              "arrDate": "2022-08-09",
+              "depDate": "2022-08-09",
+              "delayArrival": "78",
+              "schArrivalTime": "02:08",
+              "schArrivalDate": "2022-08-09"
+            },
+            {
+              "code": "SLO",
+              "name": "Samalkot jn",
+              "isCateringAvailable": false,
+              "dayCount": "2",
+              "arrival": "04:16",
+              "departure": "04:18",
+              "halt": "02:00",
+              "stationSerialNumber": null,
+              "routeNumber": null,
+              "arrDate": "2022-08-09",
+              "depDate": "2022-08-09",
+              "delayArrival": "88",
+              "schArrivalTime": "02:48",
+              "schArrivalDate": "2022-08-09"
+            },
+            {
+              "code": "VSKP",
+              "name": "Visakhapatnam",
+              "isCateringAvailable": false,
+              "dayCount": "2",
+              "arrival": "07:15",
+              "departure": "07:35",
+              "halt": "20:00",
+              "stationSerialNumber": null,
+              "routeNumber": null,
+              "arrDate": "2022-08-09",
+              "depDate": "2022-08-09",
+              "delayArrival": "19",
+              "schArrivalTime": "07:15",
+              "schArrivalDate": "2022-08-09"
+            },
+            {
+              "code": "BAM",
+              "name": "Brahmapur",
+              "isCateringAvailable": false,
+              "dayCount": "2",
+              "arrival": "12:27",
+              "departure": "12:32",
+              "halt": "05:00",
+              "stationSerialNumber": null,
+              "routeNumber": null,
+              "arrDate": "2022-08-09",
+              "depDate": "2022-08-09",
+              "delayArrival": "0",
+              "schArrivalTime": "12:27",
+              "schArrivalDate": "2022-08-09"
+            }
+        ],
+        "trainInfo": {
+            "trainNo": "13351",
+            "name": "DHN ALAPPUZHA E",
+            "boarding": "DHN",
+            "destination": "KPD",
+            "dt": "08-08-2022",
+            "boardingDayCount": null,
+            "fromStationName": null,
+            "toStationName": null,
+            "origin": null
+        },
+        "seatInfo": {
+            "coach": "A2",
+            "berth": "19",
+            "noOfSeats": 3
+        },
+        "passengerInfo": [
+            {
+                "currentCoach": "A2",
+                "currentBerthNo": "19"
+            },
+            {
+                "currentCoach": "A2",
+                "currentBerthNo": "21"
+            },
+            {
+                "currentCoach": "A2",
+                "currentBerthNo": "20"
+            }
+        ]
+    }
+}
