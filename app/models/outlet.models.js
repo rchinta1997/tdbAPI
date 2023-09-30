@@ -21,13 +21,14 @@ const outletSchema = mongoose.Schema(
     GST_NO: { type: String },
     FSSAI_NO: { type: String },
     FSSAI_Valid_Upto: { type: Date },
-    Closing_Period: { type: String },
+    Closing_Period_From: { type: Date },
+    Closing_Period_To: { type: Date },
     WeeklyClosed: { type: Array },
     Logo_Id: { type: mongoose.Schema.Types.ObjectId, ref: "photos.files" },
     NutriDocument_Id: { type: mongoose.Schema.Types.ObjectId, ref: "photos.files" },
     isDelete: { type: Boolean, default: false },
-    isActive: { type: Boolean, default: false },
-    VendorId: { type: mongoose.Schema.Types.ObjectId, ref: "Vendors" },
+    isActive: { type: Boolean},
+    VendorId: { type: mongoose.Schema.Types.ObjectId, ref: "Vendors" }
   },
   { timestamps: true }
 );
