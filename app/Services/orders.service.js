@@ -163,7 +163,7 @@ class OrderService {
     }
   }
 
-  async getAllOrders() {
+  async getAllOrders() {  
     try {
       // let query = { isDelete: false };
       // let populateQuery = [
@@ -172,8 +172,18 @@ class OrderService {
       //   { path: "Logo_Id", select: "filename" },
       //   { path: "NutriDocument_Id", select: "filename" }
       // ];
+
+      let populateQuery = [
+        { path: "User_Id", select: "emailID mobileNumber VendorName" },
+        { path: "Order_Status_Id", select: "OrderStatus" },
+        //{ path: "Outlet_id", select: "StationName" },
+        //{ path: "Logo_Id", select: "filename" },
+        //{ path: "NutriDocument_Id", select: "filename" }
+      ];
       const result = await orderModel.find()
+      .populate(populateQuery).sort({createdAt:-1}) 
         .then((result) => {
+          console.log("orders result",result);
           return result;
         })
         .catch((err) => {
@@ -184,6 +194,119 @@ class OrderService {
       return { success: false, error: err };
     }
   }
+
+  async getAllOrderStatus() { 
+    try {
+       let query = { isDelete: false };
+    
+      const result = await orderStatusModel.find(query)    
+        .then((result) => {
+          console.log("orders result",result);
+          return result;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return { success: true, body: result };
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
+
+  
+
+  async updateOrderStatus(req,res) { 
+    try {
+      let result = {};
+      console.log("req",req.body);
+      let query = { _id: req.body.order_Id };
+      const existingOrder = await orderModel.find(query)
+      .then((existingOrder) => {
+        existingOrder[0].Order_Status_Id = req.body.order_Status_Id;
+        console.log("existingOrder",existingOrder[0].Order_Status_Id);
+         result =   this.MongooseServiceInstance.update(req.body.order_Id,existingOrder[0])    
+        .then((result) => {         
+          return result;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      return { success: true, body: result };
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
+
+  async getOrdersByVendorId(venderId) {
+    try {
+      // let query = { isDelete: false };
+      // let populateQuery = [
+      //   { path: "VendorId", select: "PANNumber MobileNumber VendorName" },
+      //   { path: "Station_Id", select: "StationName" },
+      //   { path: "Logo_Id", select: "filename" },
+      //   { path: "NutriDocument_Id", select: "filename" }
+      // ];
+      let multiFitlerQuery = {
+        $and: [
+            {'Vendor_Id': venderId},
+            {'Vendor_Id': {$ne:null}}
+        ]
+    }
+      let query = { Vendor_Id: venderId,Vendor_Id:{$ne:null} };
+      let populateQuery = [
+        { path: "User_Id", select: "emailID mobileNumber VendorName" },
+        //{ path: "Outlet_id", select: "StationName" },
+        //{ path: "Logo_Id", select: "filename" },
+        //{ path: "NutriDocument_Id", select: "filename" }
+      ];
+      const result = await orderModel.find(multiFitlerQuery)
+      .populate(populateQuery).sort({createdAt:-1}) 
+        .then((result) => {
+          console.log("orders result",result);
+          return result;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return { success: true, body: result };
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
+
+
+  async getOrdersByDate(req) {
+    try {
+      const start = req.body.startdate;
+      const end = req.body.enddate;
+      //const start = new Date("2023-09-16");
+      //start.setHours(0, 0, 0, 0);
+      //const end = new Date("2023-09-26");
+      //end.setHours(23, 59, 59, 999);
+      const result = await orderModel.find({ 
+        createdAt: {
+            $gte: start, 
+            $lte: end
+        }})
+        .then((result) => {
+          console.log("orders date result",result);
+          return result;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return { success: true, body: result };
+    } catch (err) {
+      return { success: false, error: err };
+      }
+    }
+
 }
+
+
 
 module.exports = OrderService;

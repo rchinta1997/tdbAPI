@@ -1,3 +1,4 @@
+const { copyFileSync } = require("fs");
 const OutletService = require("../Services/outlet.service");
 const OutletServiceInstance = new OutletService();
 
@@ -7,11 +8,27 @@ module.exports = {
   getOutletsByUserId,
   getOutletsDD,
   updateOutletData,
-  getOutletsByStationCode
+  getOutletsByStationCode,
+  getOutletsByVendorId,
+  createOutletWithoutDuplicateOutletName,
+  duplicate_outlet_check
 };
 
 async function createOutlet(req, res) {
   try {
+    console.log("========createOutlet===============")
+    console.log("createOutlet",req.body);
+    const createdCord = await OutletServiceInstance.createOutlet(req,res);
+    return res.send(createdCord);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function createOutletWithoutDuplicateOutletName(req, res) {
+  try {
+    console.log("========createOutlet===============")
+    console.log("createOutlet",req.body);
     const createdCord = await OutletServiceInstance.createOutlet(req,res);
     return res.send(createdCord);
   } catch (err) {
@@ -21,6 +38,7 @@ async function createOutlet(req, res) {
 
 async function getAllOutlets(req, res) {
   try {
+    console.log("==========getAllOutlets===============");
     const createdCord = await OutletServiceInstance.getAllOutlets();
     return res.send(createdCord);
   } catch (err) {
@@ -61,6 +79,24 @@ async function updateOutletData(req, res) {
       req.params.outletId,
       req.body
     );
+    return res.send(createdCord);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function getOutletsByVendorId(req, res) {
+  try {
+    const createdCord = await OutletServiceInstance.getOutletsByVendorId(req.params.vendorId);
+    return res.send(createdCord);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function duplicate_outlet_check(req, res) {
+  try {
+    const createdCord = await OutletServiceInstance.duplicate_outlet_check(req.params.vendorId);
     return res.send(createdCord);
   } catch (err) {
     res.status(500).send(err);

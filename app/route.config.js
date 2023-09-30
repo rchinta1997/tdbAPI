@@ -7,7 +7,8 @@ const IrctcRequestController = require("./controllers/IrctcRequest.controller.js
 const UploadsController = require("./controllers/uploads.controller")
 const CuisineController = require("./controllers/cuisine.controller")
 const FoodTypeController = require("./controllers/foodType.controller")
-const OrdersController = require("./controllers/orders.controller");
+const OrdersController = require("./controllers/orders.controller");  
+const OutletUserController = require("./controllers/outletuser.controller.js"); 
 const { authorize } = require("./Config/auth.middleware");
 const multer = require('multer');
 
@@ -52,24 +53,38 @@ module.exports = (app) => {
   );
   //#endregion
 
+  //#region 
+  app.post("/admin/authenticate", UserController.adminAuthenticate);
+  //#endregin
+
   //#region Vendors
+  app.post("/vendors/authenticate", UserController.vendorAuthenticate);
   app.post("/vendors/create", VendorsController.createVendor);
   app.get("/vendors/getAllVendors", VendorsController.getAllVendors);
   app.put("/vendors/update/:vendorId", VendorsController.updateVendor);
   //#endregion
 
   //#region  Outlets
-  app.post("/Outlets/create", authorize, OutletController.createOutlet);
+  app.post("/Outlets/create",  OutletController.createOutletWithoutDuplicateOutletName);
   app.get("/Outlets/getAllOutlets", authorize, OutletController.getAllOutlets);
   app.get("/Outlets/getOutletsByUserId/:vendorId", authorize, OutletController.getOutletsByUserId);
   app.get("/Outlets/getOutletsByStationCode/:stationCode", OutletController.getOutletsByStationCode);
   app.get("/Outlets/getOutletsDD", authorize, OutletController.getOutletsDD);
+  app.get("/Outlets/getOutletsByVendorId/:vendorId", authorize, OutletController.getOutletsByVendorId);
+
   app.put(
     "/Outlets/update/:outletId",
     authorize,
     OutletController.updateOutletData
   );
   //#endregion
+
+
+   //#region OutletUsers
+   app.post("/OutletUser/create", authorize, OutletUserController.createUser);
+   app.get("/OutletUser/getAllOutletUsers", authorize, OutletUserController.getOutletUsers);
+   app.post("/Outletuser/authenticate", OutletUserController.authenticate);
+   //#endregion
 
   //#region  MenuItems
   app.post("/MenuItems/create", MenuItemsController.createMenuItems);
@@ -82,6 +97,9 @@ module.exports = (app) => {
     authorize,
     MenuItemsController.createBulkMenuItems
   );
+  app.get("/MenuItems/getFoodTypesCuisineTypes", MenuItemsController.getFoodTypesCusineTypes);
+  app.post("/MenuItems/createMenuItem", MenuItemsController.createMenuItem);
+  app.get("/MenuItems/getMenuItemsList", MenuItemsController.getMenuItemsList);
   //#endregion
 
   //#region IRCTCRequest
@@ -108,5 +126,9 @@ module.exports = (app) => {
   //#region  Order
   app.post("/order/createOrder",OrdersController.createOrder )
   app.get("/order/getAllOrders",OrdersController.getAllOrders )
+  app.get("/order/getOrdersByVendorId/:venderId",OrdersController.getOrdersByVendorId )
+  app.get("/order/getAllOrderStatus", OrdersController.getAllOrderStatus);
+  app.post("/order/updateOrderStatus", OrdersController.updateOrderStatus);
+  app.post("/order/getOrdersByDate",OrdersController.getOrdersByDate);
   //#endregion
 };

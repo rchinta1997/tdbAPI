@@ -1,7 +1,7 @@
-const UserService = require("../Services/user.service");
+const UserService = require("../Services/outletuser.service");
 const UserServiceInstance = new UserService();
 
-module.exports = { createUser, deleteUser, getUserById, authenticate, getConsumers,vendorAuthenticate,adminAuthenticate };
+module.exports = { createUser, deleteUser, getOutletUserById, authenticate, getOutletUsers };
 
 async function createUser(req, res) {
   try {
@@ -21,24 +21,6 @@ async function authenticate(req, res) {
   }
 }
 
-async function vendorAuthenticate(req, res) {
-  try {
-    const createdCord = await UserServiceInstance.vendorAuthenticate(req.body);
-    return res.send(createdCord);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-}
-
-async function adminAuthenticate(req, res) {
-  try {
-    const createdCord = await UserServiceInstance.adminAuthenticate(req.body);
-    return res.send(createdCord);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-}
-
 async function deleteUser(req, res) {
   try {
     const createdCord = await UserServiceInstance.deleteUser(req.body);
@@ -48,7 +30,7 @@ async function deleteUser(req, res) {
   }
 }
 
-async function getUserById(req, res) {
+async function getOutletUserById(req, res) {
   try {
     if (!req.user) return res.status(401).send("Unauthorized, Invalid Token");
     let id = req.params.userId;
@@ -60,9 +42,10 @@ async function getUserById(req, res) {
   }
 }
 
-  async function getConsumers(req,res){
-    try {
-      const createdCord = await UserServiceInstance.getConsumers();
+  async function getOutletUsers(req,res){
+    try {    
+      console.log("---------getOutletUsers----------")
+      const createdCord = await UserServiceInstance.getAllOutletUser();
       return res.send(createdCord);
     } catch (err) {
       res.status(500).send(err);
